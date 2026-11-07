@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dino's Creator Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#E8452C;--dark:#1B1B1F;--grey:#5A5A66;--light:#F4F1EC;--line:#E4DFD7;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--light);color:var(--dark);line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px 60px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px}
+h1{font-size:34px;line-height:1.1;margin:0;font-weight:800;letter-spacing:-.02em}
+h1 span{color:var(--accent)}
+.sub{color:var(--grey);margin:6px 0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--dark);color:#fff;text-decoration:none;border:0;border-radius:10px;padding:11px 16px;font:600 14px Inter,sans-serif;cursor:pointer}
+.btn.alt{background:var(--accent)}
+.btn.ghost{background:transparent;color:var(--dark);border:1.5px solid var(--dark)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+.card h2{margin:0 0 4px;font-size:20px}
+.card .hint{color:var(--grey);font-size:14px;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+label{font-weight:600;font-size:13px;display:block;margin-bottom:6px}
+select,input{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font:15px Inter,sans-serif;background:#fff;color:var(--dark)}
+select:focus,input:focus{outline:none;border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font:500 13px Inter,sans-serif;cursor:pointer}
+.chip:hover,.chip.on{border-color:var(--accent);color:var(--accent)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+#plan{display:none}
+.banner{background:var(--dark);color:#fff;border-radius:16px;padding:24px;margin-bottom:18px}
+.banner h2{margin:0;font-size:24px}
+.banner p{margin:6px 0 0;color:#cfcfd6}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{border:0;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 14px;font:600 14px Inter,sans-serif;cursor:pointer;color:var(--grey)}
+.tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.pane{display:none}.pane.on{display:block}
+ul.tidy{margin:0;padding-left:20px}ul.tidy li{margin:5px 0}
+.pill{display:inline-block;background:var(--light);border-radius:8px;padding:4px 9px;margin:3px 4px 3px 0;font-size:13px}
+.bio{background:var(--light);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:var(--dark);color:#fff;text-align:left;padding:9px 10px;font-weight:600}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:#FAF8F5}
+td.d{font-weight:700;color:var(--accent);white-space:nowrap}
+.tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--grey)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:720px){.two{grid-template-columns:1fr}h1{font-size:28px}}
+.check li{list-style:none;margin:7px 0}.check{padding-left:0}
+.check input{width:auto;margin-right:8px;accent-color:var(--accent)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:.25s;pointer-events:none}
+.toast.on{opacity:1}
+pre{white-space:pre-wrap;background:var(--light);padding:12px;border-radius:10px;font:13px/1.5 ui-monospace,Menlo,monospace;margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Dino's <span>Creator</span> Portal</h1>
+      <p class="sub">Your growth playbook and a plan built around your niche.</p>
+    </div>
+    <a class="btn" href="playbook.pdf" target="_blank" rel="noopener">📄 Open the Playbook PDF</a>
+  </header>
+
+  <div class="card">
+    <h2>Step 1: Tell me about your account</h2>
+    <p class="hint">Pick a niche from the list or type your own. Your plan updates to match.</p>
+    <div class="grid">
+      <div><label for="niche">Niche</label>
+        <select id="niche"><option value="">Choose a niche…</option></select></div>
+      <div><label for="custom">…or type your own</label>
+        <input id="custom" placeholder="e.g. budget fishing trips"></div>
+      <div><label for="platform">Main platform</label>
+        <select id="platform"><option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option></select></div>
+      <div><label for="camera">On camera?</label>
+        <select id="camera"><option value="face">Yes, face on camera</option><option value="voice">Voice only / hands only</option><option value="none">No face, no voice</option></select></div>
+      <div><label for="time">Time per day</label>
+        <select id="time"><option value="30">About 30 minutes</option><option value="60" selected>About 1 hour</option><option value="120">2+ hours</option></select></div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="actions">
+      <button class="btn alt" id="go">Build my plan →</button>
+    </div>
+  </div>
+
+  <div id="plan">
+    <div class="banner"><h2 id="pTitle"></h2><p id="pSub"></p></div>
+    <div class="tabs" id="tabs"></div>
+
+    <div class="pane on" data-p="setup">
+      <div class="card"><h2>Your profile</h2><p class="hint">Copy this bio and adjust it to sound like you.</p>
+        <div class="bio" id="bio"></div>
+        <p style="margin:14px 0 6px"><b>Handle ideas:</b></p><div id="handles"></div>
+        <p style="margin:14px 0 6px"><b>Hashtags to rotate (use 3–5 per post):</b></p><div id="tags"></div>
+      </div>
+      <div class="two">
+        <div class="card"><h2>Your 4 content pillars</h2><p class="hint">Rotate between these every week.</p><ul class="tidy" id="pillars"></ul></div>
+        <div class="card"><h2>Hooks for the first 2 seconds</h2><p class="hint">Fill in the blanks and use them.</p><ul class="tidy" id="hooks"></ul></div>
+      </div>
+    </div>
+
+    <div class="pane" data-p="calendar">
+      <div class="card"><h2>Your first 30 days</h2><p class="hint" id="calHint"></p>
+        <table><thead><tr><th>Day</th><th>Pillar</th><th>Video idea</th></tr></thead><tbody id="cal"></tbody></table>
+      </div>
+    </div>
+
+    <div class="pane" data-p="routine">
+      <div class="two">
+        <div class="card"><h2>Weekly schedule</h2><p class="hint" id="schedHint"></p><ul class="tidy" id="sched"></ul></div>
+        <div class="card"><h2>How to film</h2><p class="hint" id="camHint"></p><ul class="tidy" id="cam"></ul></div>
+      </div>
+      <div class="card"><h2>AI prompts to copy</h2><p class="hint">Paste into ChatGPT or Claude. They already include your niche.</p><div id="prompts"></div></div>
+    </div>
+
+    <div class="pane" data-p="money">
+      <div class="two">
+        <div class="card"><h2>Affiliate products to link</h2><p class="hint">You can start these on day 1 (Amazon Associates, TikTok Shop affiliate).</p><ul class="tidy" id="aff"></ul></div>
+        <div class="card"><h2>Brands to pitch later</h2><p class="hint">Once you have a few videos that did well, make a one-page media kit and reach out.</p><ul class="tidy" id="brands"></ul></div>
+      </div>
+      <div class="card"><h2>Milestones</h2>
+        <table><thead><tr><th>Stage</th><th>What unlocks</th></tr></thead><tbody>
+          <tr><td class="d">Day 1</td><td>Affiliate links (Amazon Associates, TikTok Shop affiliate)</td></tr>
+          <tr><td class="d">~1–5k</td><td>Small brand deals and UGC (brands pay for videos you make for them)</td></tr>
+          <tr><td class="d">10k</td><td>TikTok Creator Rewards: 18+, 10k followers, 100k views in the last 30 days, and videos over 1 minute</td></tr>
+          <tr><td class="d">500 subs</td><td>YouTube fan funding (3 uploads in 90 days + 3M Shorts views or 3,000 watch hours)</td></tr>
+          <tr><td class="d">1,000 subs</td><td>YouTube ad revenue (4,000 hrs or 10M Shorts views; doubles for new applicants from Feb 1, 2027)</td></tr>
+        </tbody></table>
+        <p class="hint" style="margin-top:10px">Requirements as of Nov 2026. Check the apps for the latest.</p>
+      </div>
+    </div>
+
+    <div class="pane" data-p="checklist">
+      <div class="card"><h2>This week's checklist</h2><p class="hint">Your progress is saved on this device.</p><ul class="check" id="checklist"></ul></div>
+    </div>
+
+    <div class="actions"><button class="btn ghost" id="copy">Copy my plan as text</button></div>
+  </div>
+</div>
+<div class="toast" id="toast">Copied</div>
+
+<script>
+const N = {
+ "Cooking & cheap eats":{who:"broke 20-somethings",bio:"Cheap meals that actually slap 🍳 New recipe daily under $5",h:["cheapeats","budgetmeals","easyrecipes","cookingtiktok","mealprep","dinnerideas"],
+  topics:["a $5 dinner for two","3-ingredient breakfast","meal prep for the week under $25","fast-food copycat at home","what's in my fridge challenge","one-pan pasta","ramen upgrade","rating viral recipes","air fryer hacks","date-night meal on a budget"],
+  aff:["Air fryer","Non-stick pan set","Knife set","Meal-prep containers","Spice rack / seasoning kits"],brands:["HelloFresh / Factor","Instacart","Spice and sauce brands","Kitchen gadget brands","Grocery chains"]},
+ "Fitness & gym":{who:"guys starting the gym from zero",bio:"Getting fit without overthinking it 💪 Simple workouts and real progress",h:["gymtok","fitness","workoutideas","beginnerworkout","gymmotivation","fitnesstips"],
+  topics:["beginner full-body workout","3 mistakes everyone makes on bench","what I eat in a day","15-minute home workout","gym etiquette rules","progress check-in","protein on a budget","leg day that doesn't suck","form check of a common lift","gym bag essentials"],
+  aff:["Resistance bands","Protein powder","Gym bag","Lifting straps / belt","Shaker bottles"],brands:["Supplement brands","Gymshark-style apparel","Local gyms","Fitness apps","Meal-delivery services"]},
+ "Comedy & skits":{who:"anyone who needs a laugh",bio:"Skits about stuff we've all been through 😂 New one daily",h:["comedy","skits","relatable","funny","pov","fyp"],
+  topics:["POV: your boss texts on your day off","types of people at the gym","when your mom finds your browser history","first-date red flags","group chat at 2am","me explaining my job to my parents","customer service calls","roommate problems","Monday morning energy","people at the airport"],
+  aff:["Phone tripod with remote","Ring light","Wireless mic","Cheap wigs/props","Phone gimbal"],brands:["Food delivery apps","Mobile games","Energy drinks","Dating apps","Streaming services"]},
+ "Tech & gadgets":{who:"people who want cool tech without wasting money",bio:"Tech that's actually worth it 📱 Honest reviews and hidden features",h:["techtok","gadgets","techreview","iphonetips","amazonfinds","techhacks"],
+  topics:["5 iPhone settings to change now","gadget under $30 that's worth it","Amazon tech finds","desk setup tour","hidden phone feature","is it worth it? review","AI tool that saves hours","cheap vs expensive earbuds","charging myths busted","tech for your car"],
+  aff:["Phone accessories","Desk setup gear","Earbuds/headphones","Smart home devices","Chargers and power banks"],brands:["Accessory brands (cases, chargers)","VPN and app companies","Smart home brands","Electronics retailers","AI tools"]},
+ "Cars":{who:"car people on a budget",bio:"Car tips, mods and builds without breaking the bank 🚗",h:["cartok","carsoftiktok","carmods","cardetailing","carhacks","carguy"],
+  topics:["$50 mod that changes everything","detailing before/after","things dealers don't tell you","cheapest cars to own","car hack for winter","rating your cars","interior clean-out","car smell fix","first-car buying tips","what does this button do"],
+  aff:["Detailing kits","Phone mounts","Dash cams","Car vacuums","Seat covers / organizers"],brands:["Detailing product brands","Auto parts stores","Insurance comparison apps","Dash cam brands","Car wash chains"]},
+ "Money & side hustles":{who:"people trying to make extra money",bio:"Real ways to make extra money 💸 No fake gurus",h:["sidehustle","moneytok","makemoneyonline","personalfinance","budgeting","financetips"],
+  topics:["side hustle I tried this week","how I budget my paycheck","apps that actually pay","money mistakes in your 20s","how much I made from X","saving $1,000 fast","credit score basics","selling stuff online","beginner investing explained","no-spend week"],
+  aff:["Budgeting planners","Cashback apps (referral links)","Finance books","Selling supplies (shipping, labels)","Laptop / workspace gear"],brands:["Fintech and budgeting apps","Banks / credit unions","Cashback apps","Online course platforms","Resale marketplaces"]},
+ "Gaming":{who:"casual and competitive gamers",bio:"Gaming tips, hot takes and funny moments 🎮",h:["gaming","gamertok","gamingclips","gamingsetup","fyp","gamer"],
+  topics:["best settings for X","funniest clip of the week","setup on a budget","underrated games","tier list","rage moment","tips nobody tells beginners","reacting to patch notes","games under $20","console vs PC take"],
+  aff:["Headsets","Controllers","Gaming chairs","Capture cards","RGB lighting"],brands:["Gaming peripheral brands","Energy drinks","Mobile game studios","Gaming chairs","Streaming tools"]},
+ "Fashion & style":{who:"guys who want to dress better without trying hard",bio:"Easy outfits that make you look put together 👟",h:["mensfashion","outfitideas","ootd","styletips","fashiontok","fitcheck"],
+  topics:["5 basics every closet needs","outfit for a first date","thrift flip","rating your fits","budget vs designer","how pants should fit","sneaker rotation","one item, 3 ways","what to wear to an interview","style mistakes"],
+  aff:["Basics (tees, jeans)","Sneakers","Accessories (watches, belts)","Fragrances","Clothing care tools"],brands:["Clothing brands","Sneaker retailers","Fragrance brands","Thrift/resale apps","Jewelry/watch brands"]},
+ "Grooming & beauty":{who:"people who want to look and feel fresh",bio:"Grooming and skincare made simple ✨",h:["skincare","grooming","selfcare","haircare","beautytok","glowup"],
+  topics:["my 3-step skincare routine","haircut transformation","drugstore vs luxury","beard tips","products I regret buying","morning routine","fragrance ratings","fixing dry skin","get ready with me","budget glow-up"],
+  aff:["Skincare products","Trimmers / clippers","Hair products","Fragrances","Self-care tools"],brands:["Skincare brands","Men's grooming brands","Salons/barbers","Fragrance companies","Beauty retailers"]},
+ "Pets":{who:"pet lovers",bio:"Daily life with my pet 🐶 Tips, funny moments and reviews",h:["pettok","dogsoftiktok","catsoftiktok","dogtraining","petlover","puppy"],
+  topics:["my pet's morning routine","training trick in 60 seconds","rating pet toys","funny reaction compilation","pet product worth it?","vet-approved tips","pet POV skit","DIY treats","pet mistakes owners make","day out with my pet"],
+  aff:["Toys","Treats and food","Beds","Grooming tools","Pet cameras"],brands:["Chewy / pet retailers","Pet food brands","Pet insurance","Toy subscription boxes","Pet tech brands"]},
+ "Travel":{who:"people who want to travel on a budget",bio:"Travel more, spend less ✈️ Tips, hidden gems and cheap trips",h:["traveltok","budgettravel","traveltips","weekendtrip","hiddengems","roadtrip"],
+  topics:["weekend trip under $200","packing hacks","hidden spot near me","cheap flight tricks","what $100 gets you in X","hotel vs Airbnb","airport tips","road trip essentials","local food tour","travel mistakes"],
+  aff:["Luggage","Packing cubes","Travel adapters","Neck pillows / comfort","Travel cards (referrals)"],brands:["Hotels and booking apps","Airlines","Luggage brands","Travel insurance","Tourism boards"]},
+ "Motivation & lifestyle":{who:"people trying to level up their life",bio:"Building a better life one day at a time 🔥 Join me",h:["motivation","selfimprovement","dailyroutine","mindset","productivity","dayinmylife"],
+  topics:["my 5am routine","habits that changed my life","day in my life","books worth reading","how I stay disciplined","goals check-in","phone detox day","lessons from failing","productivity setup","what I'd tell my younger self"],
+  aff:["Planners / journals","Books","Desk and productivity gear","Supplements / wellness","Fitness basics"],brands:["Productivity apps","Wellness brands","Online learning platforms","Journals / planners","Meditation apps"]},
+};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sel=$("niche"),chips=$("chips");
+Object.keys(N).forEach(k=>{sel.add(new Option(k,k));const c=document.createElement("button");c.className="chip";c.textContent=k;c.onclick=()=>{sel.value=k;$("custom").value="";mark();build()};chips.appendChild(c)});
+function mark(){[...chips.children].forEach(c=>c.classList.toggle("on",c.textContent===sel.value&&!$("custom").value.trim()))}
+sel.onchange=()=>{$("custom").value="";mark()};$("custom").oninput=mark;
+
+function generic(n){return{who:`people into ${n}`,bio:`Everything ${n} 🔥 Tips, reviews and real talk. New video daily`,
+ h:[n.replace(/[^a-z0-9]/gi,"").toLowerCase(),n.split(" ")[0].toLowerCase().replace(/[^a-z0-9]/g,"")+"tok","tips","howto","fyp","beginners"],
+ topics:[`beginner mistakes in ${n}`,`${n} on a budget`,`my ${n} setup/tour`,`rating viral ${n} trends`,`things nobody tells you about ${n}`,`a day doing ${n}`,`${n} before/after`,`best tools for ${n}`,`myths about ${n}`,`how I got into ${n}`],
+ aff:[`Starter gear for ${n}`,`Tools you actually use for ${n}`,"Books / courses on the topic","Your filming gear (tripod, mic, light)","Anything you review"],
+ brands:[`Brands that sell ${n} products`,"Local businesses in the space","Apps your audience uses","Retailers that carry your gear","Online courses / communities"]}}
+
+const li=a=>a.map(x=>`<li>${esc(x)}</li>`).join("");
+function build(){
+ const custom=$("custom").value.trim(),name=custom||sel.value;
+ if(!name){$("toast").textContent="Pick or type a niche first";toast();return}
+ const d=custom?generic(custom):N[name],plat=$("platform").value,cam=$("camera").value,time=+$("time").value;
+ try{localStorage.setItem("dinoPortal",JSON.stringify({n:sel.value,c:custom,p:plat,cam,time}))}catch(e){}
+ $("pTitle").textContent=`Your ${name} plan`;
+ $("pSub").textContent=`For ${d.who} on ${plat}. ${time>=60?"1–2 posts a day":"1 post a day"} for 90 days.`;
+ $("bio").textContent=d.bio;
+ const base=(name.split(/[ &]+/)[0]||"").toLowerCase().replace(/[^a-z]/g,"");
+ $("handles").innerHTML=[`@dino${base}`,`@${base}withdino`,`@dino.${base}`,`@thedino${base}`].map(x=>`<span class="pill">${esc(x)}</span>`).join("");
+ $("tags").innerHTML=d.h.filter(Boolean).map(x=>`<span class="pill">#${esc(x)}</span>`).join("");
+ const P=[["Teach","quick how-to or tip"],["Show","before/after, results, reviews"],["Story","something that happened to you"],["React","hot takes on trends in "+name]];
+ $("pillars").innerHTML=P.map(p=>`<li><b>${p[0]}</b>: ${esc(p[1])}</li>`).join("");
+ const t=d.topics;
+ $("hooks").innerHTML=li([`"Stop doing this if you're into ${name}…"`,`"I tried ${t[1]} so you don't have to"`,`"Nobody talks about this ${name} trick"`,`"Here's ${t[0]} in 30 seconds"`,`"Rate this from 1–10 👇"`,`"You've been doing ${t[3]} wrong"`]);
+ const fmt=["Teach","Show","Story","React"],rows=[];
+ for(let i=0;i<30;i++){const f=fmt[i%4],tp=t[i%t.length];let idea;
+  if(f==="Teach")idea=`How-to: ${tp}`;else if(f==="Show")idea=`Show the result: ${tp}`;else if(f==="Story")idea=`Story time tied to ${tp}`;else idea=`Hot take or react: ${tp}`;
+  if((i+1)%7===0)idea="Reply to your top comment with a video + weekly review";
+  rows.push(`<tr><td class="d">${i+1}</td><td><span class="tag">${f}</span></td><td>${esc(idea)}</td></tr>`)}
+ $("cal").innerHTML=rows.join("");
+ $("calHint").textContent=plat==="TikTok"?"Make most videos 60+ seconds so they count toward Creator Rewards later. Cut 15–30 second versions for Shorts and Reels.":"Keep them 15–45 seconds, then repost the same video on the other two apps.";
+ const s={30:["Sunday: batch film 7 videos (about 2 hrs)","Mon–Sat: post 1 per day (scheduled)","Daily: 15 min replying to comments","Sunday: 15 min weekly review"],
+  60:["Sunday: batch film 7–10 videos","Every day: post 1, plus a second on good days","Daily: 30 min of replies and commenting on bigger accounts","Sunday: weekly review, then repeat what worked"],
+  120:["Sun + Wed: two filming sessions (14 videos)","Every day: post 2 (afternoon + evening)","Daily: 45 min of engagement and video replies","Go LIVE once a week","Sunday: weekly review"]}[time];
+ $("sched").innerHTML=li(s);$("schedHint").textContent="Start posting around 6–9pm. After 2–3 weeks, check your analytics for when your followers are online.";
+ const c={face:["Film vertical at eye level by a window","Talk to the camera like you're FaceTiming a friend","Use CapCut auto-captions on every video","Start talking right away: no 'hey guys'"],
+  voice:["Film your hands, the screen or the product, and do a voiceover","Use a cheap clip-on mic, since audio matters more than video","Put big text on screen for the hook","CapCut auto-captions on every video"],
+  none:["Use text-on-screen plus trending audio","Try slideshows and carousels with strong captions","Screen recordings and B-roll with AI voiceover (keep the script yours)","Heads up: faceless accounts grow slower, so post more often"]}[cam];
+ $("cam").innerHTML=li(c);$("camHint").textContent={face:"On camera grows fastest.",voice:"Voice-only works well for tutorials and reviews.",none:"Faceless can work, but it needs more volume."}[cam];
+ const pr=[`Give me 30 short-form video ideas for a ${plat} account about ${name} aimed at ${d.who}. For each, write a scroll-stopping hook under 12 words.`,
+  `Write a 45-second script about "${t[0]}" for ${plat}. Hook in the first 2 seconds, fast pacing, end with a call to action to follow.`,
+  `Write 5 captions with 4 hashtags each for a ${name} video about "${t[2]}". Casual tone, no cringe.`,
+  `Here are my last 5 videos with their views and watch time: [paste]. What patterns do you see, and what should I make next?`];
+ $("prompts").innerHTML=pr.map((x,i)=>`<pre id="pr${i}">${esc(x)}</pre><div style="margin:6px 0 14px"><button class="btn ghost" style="padding:6px 12px;font-size:13px" data-cp="pr${i}">Copy prompt</button></div>`).join("");
+ $("aff").innerHTML=li(d.aff);$("brands").innerHTML=li(d.brands);
+ const ck=[`Set up ${plat} (plus the other two) with the same handle`,"Switch to a Creator/Business account","Paste in your bio and add a link-in-bio page",`Save 10 ${name} accounts with 10k–100k followers to study`,"Film your first 7 videos in one session","Schedule them for 6–9pm","Sign up for Amazon Associates or TikTok Shop affiliate","Text Brandon your first week's results"];
+ let saved={};try{saved=JSON.parse(localStorage.getItem("dinoCheck")||"{}")}catch(e){}
+ $("checklist").innerHTML=ck.map((x,i)=>`<li><label style="font-weight:500"><input type="checkbox" data-i="${i}" ${saved[i]?"checked":""}>${esc(x)}</label></li>`).join("");
+ $("checklist").onchange=e=>{saved[e.target.dataset.i]=e.target.checked;try{localStorage.setItem("dinoCheck",JSON.stringify(saved))}catch(_){}};
+ window._plan={name,d,plat};
+ $("plan").style.display="block";$("plan").scrollIntoView({behavior:"smooth"});
+}
+const T=[["setup","Profile & hooks"],["calendar","30-day calendar"],["routine","Routine & AI"],["money","Money"],["checklist","Checklist"]];
+$("tabs").innerHTML=T.map((x,i)=>`<button class="tab ${i?"":"on"}" data-t="${x[0]}">${x[1]}</button>`).join("");
+$("tabs").onclick=e=>{const b=e.target.closest(".tab");if(!b)return;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on",p.dataset.p===b.dataset.t))};
+$("prompts").onclick=e=>{const b=e.target.closest("[data-cp]");if(b)cp($(b.dataset.cp).textContent)};
+$("go").onclick=build;
+function toast(){$("toast").classList.add("on");setTimeout(()=>{$("toast").classList.remove("on");$("toast").textContent="Copied"},1600)}
+function cp(t){navigator.clipboard.writeText(t).then(toast).catch(()=>{$("toast").textContent="Copy blocked: select and copy manually";toast()})}
+$("copy").onclick=()=>{const p=window._plan;if(!p)return;
+ const txt=`MY ${p.name.toUpperCase()} PLAN (${p.plat})\n\nBio: ${$("bio").textContent}\n\n30-DAY CALENDAR\n`+[...$("cal").rows].map(r=>`Day ${r.cells[0].textContent}: ${r.cells[2].textContent}`).join("\n")+`\n\nAFFILIATE: ${p.d.aff.join(", ")}\nBRANDS: ${p.d.brands.join(", ")}`;cp(txt)};
+try{const s=JSON.parse(localStorage.getItem("dinoPortal")||"null");if(s){sel.value=s.n||"";$("custom").value=s.c||"";$("platform").value=s.p;$("camera").value=s.cam;$("time").value=s.time;mark();if(s.n||s.c)build()}}catch(e){}
+</script>
+</body>
+</html>
